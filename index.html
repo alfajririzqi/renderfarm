@@ -8,20 +8,16 @@
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
             margin: 0;
             padding: 2.5rem 0; /* Added vertical padding for better spacing */
             position: relative; /* For the overlay */
-            /* Removed overflow: hidden; to allow content scrolling */
-            /* Background styles moved to #animated-background */
+            /* Removed flexbox properties to allow natural scrolling */
+            /* Removed min-height: 100vh; to allow content to dictate height */
         }
 
         /* Animated Background Container */
         #animated-background {
-            position: fixed;
+            position: fixed; /* Stays fixed during scroll */
             top: 0;
             left: 0;
             width: 100%;
@@ -36,7 +32,7 @@
 
         /* Overlay for smooth transition */
         .background-overlay {
-            position: fixed; /* Changed to fixed to cover the entire viewport */
+            position: fixed; /* Stays fixed during scroll */
             top: 0;
             left: 0;
             width: 100%;
@@ -99,6 +95,7 @@
             transform: scale(0.8);
             transition: opacity 1.5s ease-out, transform 1.5s ease-out;
             z-index: 10; /* Ensure container is above overlay */
+            margin: 0 auto; /* Center horizontally */
         }
 
         @media (min-width: 768px) {
