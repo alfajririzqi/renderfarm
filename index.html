@@ -6,40 +6,45 @@
     <title>Kalkulator Harga Render</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        html {
+            height: 100%;
+            overflow-y: auto; /* Memungkinkan scrolling vertikal untuk seluruh dokumen */
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
             margin: 0;
-            padding: 2.5rem 0; /* Added vertical padding for better spacing */
-            position: relative; /* For the overlay */
-            /* Removed flexbox properties to allow natural scrolling */
-            /* Removed min-height: 100vh; to allow content to dictate height */
+            padding: 2.5rem 0; /* Padding vertikal untuk konten */
+            position: relative;
+            min-height: 100%; /* Memastikan body mengambil setidaknya 100% tinggi html */
+            display: block; /* Memastikan body berperilaku sebagai elemen blok */
         }
 
         /* Animated Background Container */
         #animated-background {
-            position: fixed; /* Stays fixed during scroll */
+            position: fixed; /* Tetap di tempat saat di-scroll */
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #1a2a3a, #000000); /* Default fallback */
+            background: linear-gradient(135deg, #1a2a3a, #000000); /* Fallback default */
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
-            transition: background-image 0.1s ease-in-out; /* Smooth transition for background image change */
-            z-index: -2; /* Below the overlay and content */
+            transition: background-image 0.1s ease-in-out; /* Transisi halus untuk pergantian gambar background */
+            z-index: -2; /* Di bawah overlay dan konten */
         }
 
         /* Overlay for smooth transition */
         .background-overlay {
-            position: fixed; /* Stays fixed during scroll */
+            position: fixed; /* Tetap di tempat saat di-scroll */
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0); /* Start fully transparent */
-            transition: background-color 1s ease-in-out; /* Smooth fade for overlay */
-            z-index: -1; /* Below the content, above the animated background */
+            background-color: rgba(0, 0, 0, 0); /* Mulai transparan penuh */
+            transition: background-color 1s ease-in-out; /* Fade halus untuk overlay */
+            z-index: -1; /* Di bawah konten, di atas animated background */
         }
 
         /* Keyframes for subtle background animations */
@@ -71,9 +76,9 @@
 
         /* Class to apply for animated backgrounds */
         .animate-background {
-            animation-duration: 10s; /* Match the switch interval */
+            animation-duration: 10s; /* Sesuai dengan interval pergantian */
             animation-iteration-count: infinite;
-            animation-timing-function: linear; /* Keep movement smooth */
+            animation-timing-function: linear; /* Gerakan halus */
             animation-fill-mode: forwards;
         }
 
@@ -84,9 +89,9 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(15px) saturate(180%);
             -webkit-backdrop-filter: blur(15px) saturate(180%);
-            padding: 1.5rem; /* Slightly reduced padding inside the container for mobile */
-            width: calc(100% - 4rem); /* 2rem margin on left and right for mobile */
-            max-width: 450px; /* Max width for larger screens (PC) */
+            padding: 1.5rem; /* Padding internal sedikit dikurangi untuk mobile */
+            width: calc(100% - 4rem); /* Margin 2rem di kiri dan kanan untuk mobile */
+            max-width: 450px; /* Lebar maksimum untuk layar lebih besar (PC) */
             display: flex;
             flex-direction: column;
             gap: 1.75rem;
@@ -94,14 +99,14 @@
             opacity: 0;
             transform: scale(0.8);
             transition: opacity 1.5s ease-out, transform 1.5s ease-out;
-            z-index: 10; /* Ensure container is above overlay */
-            margin: 0 auto; /* Center horizontally */
+            z-index: 10; /* Memastikan container di atas overlay */
+            margin: 0 auto; /* Pusatkan secara horizontal */
         }
 
         @media (min-width: 768px) {
             .container {
-                width: 450px; /* Fixed width on desktop */
-                padding: 2.5rem; /* Restore original padding for desktop */
+                width: 450px; /* Lebar tetap di desktop */
+                padding: 2.5rem; /* Kembalikan padding asli untuk desktop */
             }
         }
 
@@ -112,6 +117,8 @@
         label {
             color: #ffffff;
             font-weight: 600;
+            display: flex; /* Untuk mensejajarkan ikon dengan teks label */
+            align-items: center; /* Untuk mensejajarkan ikon dengan teks label */
         }
         input[type="number"],
         select {
@@ -330,6 +337,15 @@
         .notes-section ul li {
             margin-bottom: 0.5rem;
         }
+
+        /* Footer Styling */
+        footer {
+            margin-top: 2.5rem; /* Space above the footer */
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7); /* Slightly transparent white */
+            font-size: 0.875rem; /* Smaller font size */
+            padding-bottom: 1rem; /* Padding at the very bottom */
+        }
     </style>
 </head>
 <body>
@@ -356,6 +372,34 @@
             </ul>
         </div>
 
+        <!-- Blender Version - NEW & FIRST -->
+        <div class="input-group">
+            <label for="blenderVersion" class="block text-sm mb-1">Pilih Versi Blender:</label>
+            <select id="blenderVersion">
+                <option value="2.80">Blender 2.80</option>
+                <option value="2.81">Blender 2.81</option>
+                <option value="2.82">Blender 2.82</option>
+                <option value="2.83">Blender 2.83</option>
+                <option value="2.90">Blender 2.90</option>
+                <option value="2.91">Blender 2.91</option>
+                <option value="2.92">Blender 2.92</option>
+                <option value="2.93">Blender 2.93</option>
+                <option value="3.0">Blender 3.0</option>
+                <option value="3.1">Blender 3.1</option>
+                <option value="3.2">Blender 3.2</option>
+                <option value="3.3">Blender 3.3</option>
+                <option value="3.4">Blender 3.4</option>
+                <option value="3.5">Blender 3.5</option>
+                <option value="3.6">Blender 3.6</option>
+                <option value="4.0">Blender 4.0</option>
+                <option value="4.1">Blender 4.1</option>
+                <option value="4.2">Blender 4.2</option>
+                <option value="4.3">Blender 4.3</option>
+                <option value="4.4" selected>Blender 4.4</option> <!-- Default to 4.4 -->
+            </select>
+        </div>
+
+        <!-- Render Engine - SECOND -->
         <div class="input-group">
             <label for="renderEngine" class="block text-sm mb-1">Pilih Render Engine:</label>
             <select id="renderEngine">
@@ -364,6 +408,14 @@
             </select>
         </div>
 
+        <!-- Jumlah Frame - THIRD -->
+        <div class="input-group">
+            <label for="numberOfFrames" class="block text-sm mb-1">Jumlah Frame:</label>
+            <input type="number" id="numberOfFrames" placeholder="Contoh: 250" min="1">
+            <p id="numberOfFramesError" class="error-message hidden">Masukkan jumlah frame yang valid (minimal 1).</p>
+        </div>
+
+        <!-- Pilih Resolusi - FOURTH -->
         <div class="input-group">
             <label for="resolution" class="block text-sm mb-1">Pilih Resolusi:</label>
             <select id="resolution">
@@ -372,12 +424,6 @@
                 <option value="2k">1440p (2K): 2560x1440</option>
                 <option value="4k">2160p (4K): 3840x2160</option>
             </select>
-        </div>
-
-        <div class="input-group">
-            <label for="numberOfFrames" class="block text-sm mb-1">Jumlah Frame:</label>
-            <input type="number" id="numberOfFrames" placeholder="Contoh: 250" min="1">
-            <p id="numberOfFramesError" class="error-message hidden">Masukkan jumlah frame yang valid (minimal 1).</p>
         </div>
 
         <button onclick="calculatePrice()" class="action-button calculate-button">Hitung Harga</button>
@@ -405,8 +451,12 @@
         </div>
     </div>
 
+    <footer class="text-center text-white text-sm mt-8 pb-4 opacity-70">
+        <p>&copy; 2025 RAF Pictures. All rights reserved.</p>
+        <p>Dibuat dengan ❤️ untuk kebutuhan render Anda.</p>
+    </footer>
+
     <script>
-        // Updated to raw GitHub URLs for direct image access
         const BACKGROUND_IMAGES = [
             'https://raw.githubusercontent.com/alfajririzqi/renderfarm/main/img/bg_01.png',
             'https://raw.githubusercontent.com/alfajririzqi/renderfarm/main/img/bg_02.png',
@@ -436,6 +486,7 @@
         const animationTypes = ['panLeft', 'panRight', 'zoomInOut', 'panUp', 'panDown'];
 
         function calculatePrice() {
+            const blenderVersionSelect = document.getElementById('blenderVersion'); // Get Blender version select
             const renderEngineSelect = document.getElementById('renderEngine');
             const resolutionSelect = document.getElementById('resolution');
             const numberOfFramesInput = document.getElementById('numberOfFrames');
@@ -451,6 +502,7 @@
             consultationButton.classList.add('hidden');
             dotLoader.classList.remove('hidden');
 
+            const selectedBlenderVersion = blenderVersionSelect.value; // Get selected Blender version
             const selectedEngine = renderEngineSelect.value;
             const selectedResolution = resolutionSelect.value;
             const numberOfFrames = parseInt(numberOfFramesInput.value);
@@ -486,6 +538,7 @@
 
                 const whatsappMessageOrder = `Halo! Saya ingin memesan jasa renderfarm.
 Berikut detail kalkulasi render saya:
+- Blender Version: ${selectedBlenderVersion}
 - Render Engine: ${selectedEngine}
 - Resolusi: ${resolutionSelect.options[resolutionSelect.selectedIndex].text}
 - Jumlah Frame: ${numberOfFrames}
