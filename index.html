@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Harga Render</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 2.5rem 0; /* Added vertical padding for better spacing */
+            position: relative; /* For the overlay */
+            /* Removed overflow: hidden; to allow content scrolling */
+            /* Background styles moved to #animated-background */
+        }
+
+        /* Animated Background Container */
+        #animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a2a3a, #000000); /* Default fallback */
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            transition: background-image 0.1s ease-in-out; /* Smooth transition for background image change */
+            z-index: -2; /* Below the overlay and content */
+        }
+
+        /* Overlay for smooth transition */
+        .background-overlay {
+            position: fixed; /* Changed to fixed to cover the entire viewport */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0); /* Start fully transparent */
+            transition: background-color 1s ease-in-out; /* Smooth fade for overlay */
+            z-index: -1; /* Below the content, above the animated background */
+        }
+
+        /* Keyframes for subtle background animations */
+        @keyframes panLeft {
+            0% { background-position: 0% center; background-size: 105% 105%; }
+            100% { background-position: 5% center; background-size: 105% 105%; }
+        }
+
+        @keyframes panRight {
+            0% { background-position: 100% center; background-size: 105% 105%; }
+            100% { background-position: 95% center; background-size: 105% 105%; }
+        }
+
+        @keyframes zoomInOut {
+            0% { background-size: 100% 100%; background-position: center center; }
+            50% { background-size: 105% 105%; background-position: center center; }
+            100% { background-size: 100% 100%; background-position: center center; }
+        }
+
+        @keyframes panUp {
+            0% { background-position: center 0%; background-size: 105% 105%; }
+            100% { background-position: center 5%; background-size: 105% 105%; }
+        }
+
+        @keyframes panDown {
+            0% { background-position: center 100%; background-size: 105% 105%; }
+            100% { background-position: center 95%; background-size: 105% 105%; }
+        }
+
+        /* Class to apply for animated backgrounds */
+        .animate-background {
+            animation-duration: 10s; /* Match the switch interval */
+            animation-iteration-count: infinite;
+            animation-timing-function: linear; /* Keep movement smooth */
+            animation-fill-mode: forwards;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px) saturate(180%);
+            -webkit-backdrop-filter: blur(15px) saturate(180%);
+            padding: 1.5rem; /* Slightly reduced padding inside the container for mobile */
+            width: calc(100% - 4rem); /* 2rem margin on left and right for mobile */
+            max-width: 450px; /* Max width for larger screens (PC) */
+            display: flex;
+            flex-direction: column;
+            gap: 1.75rem;
+            color: #e0e0e0;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 1.5s ease-out, transform 1.5s ease-out;
+            z-index: 10; /* Ensure container is above overlay */
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                width: 450px; /* Fixed width on desktop */
+                padding: 2.5rem; /* Restore original padding for desktop */
+            }
+        }
+
+        h1 {
+            color: #ffffff;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        label {
+            color: #ffffff;
+            font-weight: 600;
+        }
+        input[type="number"],
+        select {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 9999px;
+            padding: 0.75rem 1rem;
+            width: 100%;
+            font-size: 1rem;
+            color: #ffffff;
+            transition: all 0.3s ease-in-out;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23ffffff'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.25em;
+        }
+        input[type="number"]::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3), inset 0 1px 3px rgba(0,0,0,0.2);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        select option {
+            background-color: rgba(40, 40, 40, 0.9);
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+        }
+        select option:checked {
+            background-color: rgba(70, 70, 70, 0.9);
+        }
+        select option:hover {
+            background-color: rgba(90, 90, 90, 0.9);
+        }
+
+        .action-button {
+            padding: 1.2rem 2rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: none;
+            font-size: 1.1rem;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.75rem;
+            color: white;
+            text-decoration: none;
+        }
+        .action-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        .action-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .calculate-button {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .calculate-button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .whatsapp-button {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+        }
+        .whatsapp-button:hover {
+            background: linear-gradient(135deg, #1DA851 0%, #0F6B61 100%);
+        }
+
+        .consultation-button {
+            background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+        }
+        .consultation-button:hover {
+            background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.75rem;
+        }
+        @media (min-width: 640px) {
+            .button-group {
+                flex-direction: row;
+            }
+            .button-group .action-button {
+                flex: 1;
+            }
+        }
+
+        .result-box {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 1.25rem;
+            text-align: center;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #ffffff;
+            box-shadow: inset 0 1px 5px rgba(0,0,0,0.2);
+            margin-top: 1rem;
+        }
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        .dot-loader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80px;
+            margin-top: 1rem;
+            gap: 0.75rem;
+        }
+
+        .dot-loader .dot {
+            width: 15px;
+            height: 15px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: dot-pulse 1.5s infinite ease-in-out;
+        }
+
+        .dot-loader .dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+        .dot-loader .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .dot-loader .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes dot-pulse {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+        }
+
+        #preloader .dot-loader {
+            margin-top: 0;
+            min-height: auto;
+            padding: 20px;
+        }
+
+        .notes-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: inset 0 1px 5px rgba(0,0,0,0.2);
+            padding: 1.5rem;
+            margin-bottom: 1.75rem;
+            color: #ffffff;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .notes-section h2 {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            color: #ffffff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .notes-section ul {
+            list-style: disc;
+            margin-left: 1.25rem;
+            padding-left: 0;
+        }
+        .notes-section ul li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="preloader">
+        <div class="dot-loader">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+
+    <!-- New div for animated background -->
+    <div id="animated-background"></div>
+    <div class="background-overlay" id="backgroundOverlay"></div>
+
+    <div class="container">
+        <h1 class="text-3xl font-bold text-center mb-6">Kalkulator Harga Render</h1>
+
+        <div class="notes-section">
+            <h2>Catatan Penting:</h2>
+            <ul>
+                <li>Ukuran file maksimum: 2GB</li>
+                <li>Format render yang tersedia: MP4, PNG, EXR</li>
+            </ul>
+        </div>
+
+        <div class="input-group">
+            <label for="renderEngine" class="block text-sm mb-1">Pilih Render Engine:</label>
+            <select id="renderEngine">
+                <option value="Cycles">Cycles</option>
+                <option value="Eevee" selected>Eevee</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label for="resolution" class="block text-sm mb-1">Pilih Resolusi:</label>
+            <select id="resolution">
+                <option value="720p">720p (HD): 1280x720</option>
+                <option value="1080p" selected>1080p (Full HD): 1920x1080</option>
+                <option value="2k">1440p (2K): 2560x1440</option>
+                <option value="4k">2160p (4K): 3840x2160</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label for="numberOfFrames" class="block text-sm mb-1">Jumlah Frame:</label>
+            <input type="number" id="numberOfFrames" placeholder="Contoh: 250" min="1">
+            <p id="numberOfFramesError" class="error-message hidden">Masukkan jumlah frame yang valid (minimal 1).</p>
+        </div>
+
+        <button onclick="calculatePrice()" class="action-button calculate-button">Hitung Harga</button>
+
+        <div id="dotLoader" class="dot-loader hidden">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+
+        <div id="result" class="result-box hidden">
+            <p>Total Estimasi Harga: <span id="totalPrice">IDR 0</span></p>
+        </div>
+
+        <div class="button-group">
+            <a id="whatsappButton" href="https://wa.me/6289513170863?text=Halo%2C%20saya%20ingin%20bertanya%20tentang%20jasa%20renderfarm." target="_blank" class="action-button whatsapp-button hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-whatsapp"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                Order Sekarang
+            </a>
+
+            <a id="whatsappConsultationButton" href="https://wa.me/6289513170863?text=Halo%2C%20saya%20ingin%20konsultasi%20mengenai%20jasa%20renderfarm." target="_blank" class="action-button consultation-button hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle"><path d="M7.9 20A10.5 10.5 0 0 0 12 22c5.72 0 10.5-4.22 10.5-10S17.72 2 12 2 1.5 6.22 1.5 12c0 2.12.74 4.16 2.1 5.79L2 22z"/></svg>
+                Konsultasi
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const BACKGROUND_IMAGES = [
+            'https://raw.githubusercontent.com/alfajririzqi/renderfarm/main/img/bg_01.png',
+            'https://raw.githubusercontent.com/alfajririzqi/renderfarm/main/img/bg_02.png',
+            'https://raw.githubusercontent.com/alfajririzqi/renderfarm/main/img/bg_03.png',
+            'https://raw.githubusercontent.com/alfajririzqi/renderfarm/main/img/bg_04.png',
+            'https://raw.githubusercontent.com/alfajririzqi/renderfarm/main/img/bg_05.png',
+            'https://raw.githubusercontent.com/alfajririzqi/renderfarm/main/img/bg_06.png',
+            'https://raw.githubusercontent.com/alfajririzqi/renderfarm/main/img/bg_07.png',
+            'https://raw.githubusercontent.com/alfajririzqi/renderfarm/main/img/bg_08.png',
+            'https://raw.githubusercontent.com/alfajririzqi/renderfarm/main/img/bg_09.png',
+            'https://raw.githubusercontent.com/alfajririzqi/renderfarm/main/img/bg_10.png'
+        ];
+
+        const PRICES = {
+            '720p': 300,
+            '1080p': 400,
+            '2k': 600,
+            '4k': 750
+        };
+
+        const ENGINE_MULTIPLIERS = {
+            'Cycles': 1.2,
+            'Eevee': 1.0
+        };
+
+        let currentImageIndex = 0;
+        const animationTypes = ['panLeft', 'panRight', 'zoomInOut', 'panUp', 'panDown'];
+
+        function calculatePrice() {
+            const renderEngineSelect = document.getElementById('renderEngine');
+            const resolutionSelect = document.getElementById('resolution');
+            const numberOfFramesInput = document.getElementById('numberOfFrames');
+            const whatsappButton = document.getElementById('whatsappButton');
+            const consultationButton = document.getElementById('whatsappConsultationButton');
+            const resultBox = document.getElementById('result');
+            const dotLoader = document.getElementById('dotLoader');
+            const numberOfFramesError = document.getElementById('numberOfFramesError');
+
+            numberOfFramesError.classList.add('hidden');
+            resultBox.classList.add('hidden');
+            whatsappButton.classList.add('hidden');
+            consultationButton.classList.add('hidden');
+            dotLoader.classList.remove('hidden');
+
+            const selectedEngine = renderEngineSelect.value;
+            const selectedResolution = resolutionSelect.value;
+            const numberOfFrames = parseInt(numberOfFramesInput.value);
+
+            let isValid = true;
+            if (isNaN(numberOfFrames) || numberOfFrames < 1) {
+                numberOfFramesError.classList.remove('hidden');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                dotLoader.classList.add('hidden');
+                return;
+            }
+
+            setTimeout(() => {
+                const basePricePerFrame = PRICES[selectedResolution];
+                const engineMultiplier = ENGINE_MULTIPLIERS[selectedEngine];
+                const pricePerFrame = basePricePerFrame * engineMultiplier;
+                const totalPrice = pricePerFrame * numberOfFrames;
+
+                const formattedTotalPrice = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(totalPrice);
+
+                dotLoader.classList.add('hidden');
+                const resultElement = document.getElementById('totalPrice');
+                resultElement.textContent = formattedTotalPrice;
+                resultBox.classList.remove('hidden');
+
+                const whatsappMessageOrder = `Halo! Saya ingin memesan jasa renderfarm.
+Berikut detail kalkulasi render saya:
+- Render Engine: ${selectedEngine}
+- Resolusi: ${resolutionSelect.options[resolutionSelect.selectedIndex].text}
+- Jumlah Frame: ${numberOfFrames}
+- Total Estimasi Harga: ${formattedTotalPrice}
+
+Mohon informasinya lebih lanjut. Terima kasih!`;
+
+                const encodedMessageOrder = encodeURIComponent(whatsappMessageOrder);
+                const whatsappURLOrder = `https://wa.me/6289513170863?text=${encodedMessageOrder}`;
+                whatsappButton.href = whatsappURLOrder;
+                whatsappButton.classList.remove('hidden');
+                consultationButton.classList.remove('hidden');
+            }, 1500);
+        }
+
+        /**
+         * Mengaplikasikan gambar background dan animasi ke elemen background.
+         * @param {string} imageUrl - URL gambar background.
+         * @param {string} animationClass - Nama kelas animasi yang akan diterapkan.
+         */
+        function applyBackgroundAndAnimation(imageUrl, animationClass) {
+            const animatedBackground = document.getElementById('animated-background');
+            animatedBackground.style.backgroundImage = `url('${imageUrl}')`;
+
+            // Hapus semua kelas animasi sebelumnya dari animatedBackground
+            animationTypes.forEach(anim => animatedBackground.classList.remove(anim, 'animate-background'));
+            // Terapkan animasi baru
+            animatedBackground.classList.add('animate-background', animationClass);
+        }
+
+        /**
+         * Mengelola pergantian background dengan transisi overlay.
+         * @param {boolean} initialLoad - true jika ini adalah pemuatan awal halaman.
+         * @param {HTMLElement} [containerElement] - Elemen container kalkulator (hanya saat initialLoad).
+         */
+        async function handleBackgroundChange(initialLoad, containerElement) {
+            const backgroundOverlay = document.getElementById('backgroundOverlay');
+            const animatedBackground = document.getElementById('animated-background');
+
+            // Jika bukan pemuatan awal, aktifkan overlay untuk transisi
+            if (!initialLoad) {
+                backgroundOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)'; // Fade in to dark
+                await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for fade in
+            }
+
+            // Pilih gambar dan animasi berikutnya
+            const imageUrl = BACKGROUND_IMAGES[currentImageIndex];
+            const randomAnimation = animationTypes[Math.floor(Math.random() * animationTypes.length)];
+
+            const img = new Image();
+            img.onload = () => {
+                applyBackgroundAndAnimation(imageUrl, randomAnimation);
+                if (initialLoad) {
+                    // Hanya tampilkan container pada pemuatan awal
+                    setTimeout(() => {
+                        if (containerElement) {
+                            containerElement.style.opacity = '1';
+                            containerElement.style.transform = 'scale(1)';
+                        }
+                    }, 100); // Penundaan 0.1 detik untuk transisi background
+                }
+                // Fade out overlay after new background is applied
+                if (!initialLoad) {
+                    backgroundOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+                }
+            };
+            img.onerror = () => {
+                console.error("Gagal memuat gambar background. Menggunakan background default.");
+                animatedBackground.style.backgroundImage = 'linear-gradient(135deg, #1a2a3a, #000000)'; // Fallback
+                animatedBackground.classList.remove('animate-background'); // Remove animation if fallback
+                if (initialLoad) {
+                    setTimeout(() => {
+                        if (containerElement) {
+                            containerElement.style.opacity = '1';
+                            containerElement.style.transform = 'scale(1)';
+                        }
+                    }, 100); // Penundaan 0.1 detik untuk transisi background fallback
+                }
+                if (!initialLoad) {
+                    backgroundOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+                }
+            };
+            img.src = imageUrl;
+
+            // Update index untuk gambar berikutnya
+            currentImageIndex = (currentImageIndex + 1) % BACKGROUND_IMAGES.length;
+        }
+
+        // Fungsi untuk mengelola urutan tampilan halaman
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            const container = document.querySelector('.container');
+
+            container.style.opacity = '0';
+            container.style.transform = 'scale(0.8)';
+
+            document.getElementById('whatsappConsultationButton').classList.add('hidden');
+            document.getElementById('whatsappButton').classList.add('hidden');
+
+            if (preloader) {
+                setTimeout(() => {
+                    preloader.style.opacity = '0';
+                    preloader.addEventListener('transitionend', () => {
+                        preloader.style.display = 'none';
+                        // Pemuatan background awal dan tampilkan container
+                        handleBackgroundChange(true, container);
+                        // Mulai penggantian background setiap 10 detik
+                        setInterval(() => handleBackgroundChange(false), 10000); // Ganti gambar setiap 10 detik
+                    }, { once: true });
+                }, 1000);
+            } else {
+                handleBackgroundChange(true, container);
+                setInterval(() => handleBackgroundChange(false), 10000);
+            }
+        });
+    </script>
+</body>
+</html>
