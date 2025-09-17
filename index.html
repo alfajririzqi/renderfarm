@@ -134,7 +134,7 @@
         }
 
         body.dark-mode .loader .circle:nth-child(4) {
-            background-image: linear-gradient(19deg, #6fd29c 0%, #e99fe9 100%);
+            background-image: linear-gradient(19deg, #3f7b9e 0%, #764491 100%);
             box-shadow: rgb(255, 255, 255) 0px 20px 30px -10px;
         }
         
@@ -311,84 +311,25 @@
             color: #e5e7eb;
         }
         
-        /* CSS untuk Switcher Baru */
         .switcher-container {
             position: absolute;
-            top: 2rem;
-            right: 2rem;
+            top: 24px;
+            right: 24px;
             z-index: 50;
         }
 
-        .inline-flex {
-            display: inline-flex;
-            align-items: center;
-            position: relative;
+        /* CSS untuk Switcher Baru (dari user) yang diperkecil */
+        .peer:checked + div {
+            background-color: #383838;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
         }
-
-        .peer {
+        .peer:checked + div .sun-icon {
             opacity: 0;
+            transform: rotate(90deg) translateY(-100%);
         }
-
-        .relative {
-            position: relative;
-        }
-
-        /* Ukuran diperkecil 10% lagi */
-        .w-\[89\.1px\] { width: 89.1px; }
-        .h-\[40\.5px\] { height: 40.5px; }
-        .bg-white { background-color: white; }
-        .peer-checked\:bg-zinc-500:checked + div { background-color: #6b7280; }
-        .rounded-full { border-radius: 9999px; }
-
-        .after\:absolute:after { position: absolute; }
-        .after\:content-\[\'\']:after { content: ''; }
-        /* Ukuran after diperkecil 10% lagi */
-        .after\:w-\[32\.4px\]:after { width: 32.4px; }
-        .after\:h-\[32\.4px\]:after { height: 32.4px; }
-        .after\:bg-gradient-to-r:after {
-            background-image: linear-gradient(to right, var(--tw-gradient-stops));
-        }
-        .after\:from-orange-500:after { --tw-gradient-from: #f97316; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(249, 115, 22, 0)); }
-        .after\:to-yellow-400:after { --tw-gradient-to: #facc15; }
-        
-        .peer-checked\:after\:from-zinc-900:checked + div:after { --tw-gradient-from: #18181b; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(24, 24, 27, 0)); }
-        .peer-checked\:after\:to-zinc-900:checked + div:after { --tw-gradient-to: #18181b; }
-        
-        .after\:rounded-full:after { border-radius: 9999px; }
-        /* Posisi after diperkecil 10% lagi */
-        .after\:top-\[4\.05px\]:after { top: 4.05px; }
-        .after\:left-\[4\.05px\]:after { left: 4.05px; }
-        /* Ukuran active after diperkecil 10% lagi */
-        .active\:after\:w-\[40\.5px\]:active:after { width: 40.5px; }
-        /* Posisi checked after diperkecil 10% lagi */
-        .peer-checked\:after\:left-\[85\.05px\]:checked + div:after { left: 85.05px; }
-        .peer-checked\:after\:translate-x-\[-100\%\]:checked + div:after { transform: translateX(-100%); }
-        .shadow-sm { box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); }
-        .duration-300 { transition-duration: 300ms; }
-        .after\:duration-300:after { transition-duration: 300ms; }
-        .after\:shadow-md:after { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
-        
-        .fill-white { fill: white; }
-        .peer-checked\:opacity-60:checked ~ svg { opacity: 0.6; }
-        .absolute { position: absolute; }
-        /* Ukuran SVG diperkecil 10% lagi */
-        .w-\[19\.8px\] { width: 19.8px; }
-        .h-\[19\.8px\] { height: 19.8px; }
-        /* Posisi SVG diperkecil 10% lagi */
-        .left-\[10\.53px\] { left: 10.53px; }
-        
-        .fill-black { fill: black; }
-        .opacity-60 { opacity: 0.6; }
-        .peer-checked\:opacity-70:checked ~ svg { opacity: 0.7; }
-        .peer-checked\:fill-white:checked ~ svg { fill: white; }
-        .right-\[10\.53px\] { right: 10.53px; }
-
-        body.dark-mode .bg-white {
-            background-color: #2d3748;
-        }
-
-        body.dark-mode .fill-black {
-            fill: white;
+        .peer:checked + div .moon-icon {
+            opacity: 1;
+            transform: rotate(180deg) translateY(0);
         }
     </style>
 </head>
@@ -412,19 +353,20 @@
                 <i class="fas fa-arrow-left"></i>
             </a>
             
-            <!-- Switcher baru -->
+            <!-- Switcher baru dari user yang diperkecil -->
             <div class="switcher-container">
-                <label class="inline-flex items-center relative">
-                    <input class="peer hidden" id="theme" type="checkbox" />
-                    <div class="relative w-[89.1px] h-[40.5px] bg-white peer-checked:bg-zinc-500 rounded-full after:absolute after:content-[''] after:w-[32.4px] after:h-[32.4px] after:bg-gradient-to-r from-orange-500 to-yellow-400 peer-checked:after:from-zinc-900 peer-checked:after:to-zinc-900 after:rounded-full after:top-[4.05px] after:left-[4.05px] active:after:w-[40.5px] peer-checked:after:left-[85.05px] peer-checked:after:translate-x-[-100%] shadow-sm duration-300 after:duration-300 after:shadow-md"></div>
-                    <svg height="0" width="100" viewBox="0 0 24 24" data-name="Layer 1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" class="fill-white peer-checked:opacity-60 absolute w-[19.8px] h-[19.8px] left-[10.53px]">
-                        <path d="M12,17c-2.76,0-5-2.24-5-5s2.24-5,5-5,5,2.24,5,5-2.24,5-5,5ZM13,0h-2V5h2V0Zm0,19h-2v5h2v-5ZM5,11H0v2H5v-2Zm19,0h-5v2h5v-2Zm-2.81-6.78l-1.41-1.41-3.54,3.54,1.41,1.41,3.54-3.54ZM7.76,17.66l-1.41-1.41-3.54,3.54,1.41,1.41,3.54-3.54Zm0-11.31l-3.54-3.54-1.41,1.41,3.54,3.54,1.41-1.41Zm13.44,13.44l-3.54-3.54-1.41,1.41,3.54,3.54,1.41-1.41Z"></path>
-                    </svg>
-                    <svg height="512" width="512" viewBox="0 0 24 24" data-name="Layer 1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" class="fill-black opacity-60 peer-checked:opacity-70 peer-checked:fill-white absolute w-[19.8px] h-[19.8px] right-[10.53px]">
-                        <path d="M12.009,24A12.067,12.067,0,0,1,.075,10.725,12.121,12.121,0,0,1,10.1.152a13,13,0,0,1,5.03.206,2.5,2.5,0,0,1,1.8,1.8,2.47,2.47,0,0,1-.7,2.425c-4.559,4.168-4.165,10.645.807,14.412h0a2.5,2.5,0,0,1-.7,4.319A13.875,13.875,0,0,1,12.009,24Zm.074-22a10.776,10.776,0,0,0-1.675.127,10.1,10.1,0,0,0-8.344,8.8A9.928,9.928,0,0,0,4.581,18.7a10.473,10.473,0,0,0,11.093,2.734.5.5,0,0,0,.138-.856h0C9.883,16.1,9.417,8.087,14.865,3.124a.459.459,0,0,0,.127-.465.491.491,0,0,0-.356-.362A10.68,10.68,0,0,0,12.083,2ZM20.5,12a1,1,0,0,1-.97-.757l-.358-1.43L17.74,9.428a1,1,0,0,1,.035-1.94l1.4-.325.351-1.406a1,1,0,0,1,1.94,0l.355,1.418,1.418.355a1,1,0,0,1,0,1.94l-1.418.355-.355,1.418A1,1,0,0,1,20.5,12ZM16,14a1,1,0,0,0,2,0A1,1,0,0,0,16,14Zm6,4a1,1,0,0,0,2,0A1,1,0,0,0,22,18Z"></path>
-                    </svg>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input id="darkModeToggle" class="sr-only peer" type="checkbox" />
+                    <div
+                        class="w-20 h-10 rounded-full ring-0 peer duration-500 outline-none bg-gray-200 overflow-hidden relative shadow-lg shadow-gray-400 peer-checked:shadow-lg peer-checked:shadow-gray-700 peer-checked:bg-[#383838]">
+                        <!-- Sun Icon -->
+                        <span class="absolute sun-icon h-8 w-8 top-1/2 left-1 bg-white rounded-full flex items-center justify-center -translate-y-1/2 transition-all duration-700 peer-checked:opacity-0 peer-checked:rotate-90 peer-checked:-translate-y-full">☀️</span>
+                        <!-- Moon Icon -->
+                        <span class="absolute moon-icon h-8 w-8 top-[4px] right-1 bg-[#1d1d1d] rounded-full flex items-center justify-center translate-y-full opacity-0 transition-all duration-700 peer-checked:opacity-100 peer-checked:rotate-180 peer-checked:translate-y-0">🌑</span>
+                    </div>
                 </label>
             </div>
+            <!-- Akhir switcher baru -->
             
             <!-- Profile Section -->
             <div class="flex flex-col items-center mb-4 text-center">
@@ -496,15 +438,13 @@
                         </select>
                     </div>
 
-                    <!-- Jumlah Frame -->
+                    <!-- Jumlah Frame (Slider) -->
                     <div class="p-4 rounded-lg bg-white shadow-lg">
                         <label for="frameCount" class="block text-sm font-medium text-gray-700 mb-2">
-                            <i class="fas fa-film text-gray-500 mr-1"></i> Jumlah Frame
+                            <i class="fas fa-film text-gray-500 mr-1"></i> Jumlah Frame: <span id="frameCountValue" class="font-bold text-gray-800">1</span>
                         </label>
-                        <input type="number" id="frameCount" name="frameCount" min="1"
-                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 focus:border-gray-500 focus:ring focus:ring-gray-300 focus:ring-opacity-50"
-                               placeholder="Contoh: 250">
-                        <p id="frameCountError" class="text-xs text-red-500 mt-2 hidden">Jumlah frame harus diisi.</p>
+                        <input type="range" id="frameCount" name="frameCount" min="1" max="1000" value="1"
+                               class="mt-1 block w-full h-2 rounded-lg bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 appearance-none">
                     </div>
 
                     <!-- Tombol Hitung -->
@@ -590,18 +530,25 @@
         
         window.addEventListener('DOMContentLoaded', () => {
             const savedTheme = localStorage.getItem('theme');
-            const themeToggle = document.getElementById('theme');
+            const darkModeToggle = document.getElementById('darkModeToggle');
             
             if (savedTheme === 'dark') {
                 applyDarkMode(true);
-                themeToggle.checked = true;
+                darkModeToggle.checked = true;
             } else {
                 applyDarkMode(false);
-                themeToggle.checked = false;
+                darkModeToggle.checked = false;
             }
             
-            themeToggle.addEventListener('change', (event) => {
+            darkModeToggle.addEventListener('change', (event) => {
                 applyDarkMode(event.target.checked);
+            });
+
+            // Tambahkan event listener untuk slider
+            const frameCountSlider = document.getElementById('frameCount');
+            const frameCountValue = document.getElementById('frameCountValue');
+            frameCountSlider.addEventListener('input', (event) => {
+                frameCountValue.textContent = event.target.value;
             });
         });
 
@@ -616,24 +563,15 @@
         }
 
         function calculatePrice() {
-            const frameCountInput = document.getElementById('frameCount');
-            const frameCountError = document.getElementById('frameCountError');
+            const frameCountSlider = document.getElementById('frameCount');
             const resultDiv = document.getElementById('result');
             const loadingDiv = document.getElementById('loading');
-            
-            if (frameCountInput.value.trim() === '' || isNaN(parseInt(frameCountInput.value, 10))) {
-                frameCountError.classList.remove('hidden');
-                resultDiv.classList.add('hidden');
-                return;
-            } else {
-                frameCountError.classList.add('hidden');
-            }
             
             resultDiv.classList.add('hidden');
             loadingDiv.classList.remove('hidden');
 
             setTimeout(() => {
-                const frameCount = parseInt(frameCountInput.value, 10);
+                const frameCount = parseInt(frameCountSlider.value, 10);
                 const renderEngine = document.getElementById('renderEngine').value;
                 const resolution = document.getElementById('resolution').value;
                 const totalPriceP = document.getElementById('totalPrice');
