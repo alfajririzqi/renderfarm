@@ -26,6 +26,118 @@
             color: #e5e7eb;
         }
         
+        /* Preloader CSS - Animasi baru */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        #preloader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Dari Uiverse.io oleh PriyanshuGupta28 */
+        .loader-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .loader {
+            width: 80px;
+            height: 80px;
+            position: relative;
+        }
+
+        .loader .circle {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            animation: pulse 1.2s infinite ease-in-out;
+        }
+
+        .loader .circle:nth-child(1) {
+            top: 0;
+            left: 30px;
+            background-color: #4158D0;
+            background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+            box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+        }
+
+        .loader .circle:nth-child(2) {
+            top: 30px;
+            left: 60px;
+            background-color: #0093E9;
+            background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+            animation-delay: 0.4s;
+            box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+        }
+
+        .loader .circle:nth-child(3) {
+            top: 60px;
+            left: 30px;
+            background-color: #00DBDE;
+            background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%);
+            animation-delay: 0.8s;
+            box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+        }
+
+        .loader .circle:nth-child(4) {
+            top: 30px;
+            left: 0;
+            background-color: #3EECAC;
+            background-image: linear-gradient(19deg, #3EECAC 0%, #EE74E1 100%);
+            animation-delay: 1.2s;
+            box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(0.2);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        body.dark-mode .loader .circle:nth-child(1) {
+            background-image: linear-gradient(43deg, #c3a1d9 0%, #e27dce 46%, #ffb64d 100%);
+            box-shadow: rgb(255, 255, 255) 0px 20px 30px -10px;
+        }
+
+        body.dark-mode .loader .circle:nth-child(2) {
+            background-image: linear-gradient(160deg, #4d89c5 0%, #a0e0da 100%);
+            box-shadow: rgb(255, 255, 255) 0px 20px 30px -10px;
+        }
+
+        body.dark-mode .loader .circle:nth-child(3) {
+            background-image: linear-gradient(90deg, #37c4c7 0%, #eb5cf0 100%);
+            box-shadow: rgb(255, 255, 255) 0px 20px 30px -10px;
+        }
+
+        body.dark-mode .loader .circle:nth-child(4) {
+            background-image: linear-gradient(19deg, #6fd29c 0%, #e99fe9 100%);
+            box-shadow: rgb(255, 255, 255) 0px 20px 30px -10px;
+        }
+        
         .container-wrapper {
             max-width: 620px;
             width: 100%;
@@ -34,72 +146,31 @@
             padding: 24px;
         }
 
-        .back-link, .dark-mode-toggle {
+        .back-link {
             position: absolute;
             top: 24px;
+            left: 24px;
             z-index: 50;
             color: #6b7280;
-            transition: color 0.3s ease, transform 0.3s ease;
+            transition: all 0.3s ease;
             font-size: 1.5rem;
             cursor: pointer;
         }
 
-        .back-link {
-            left: 24px;
-        }
-
-        .dark-mode-toggle {
-            right: 24px;
-        }
-        
         .back-link:hover {
             color: #4b5563;
+            transform: scale(1.1);
         }
 
-        /* Ikon matahari di mode gelap */
-        body.dark-mode .dark-mode-toggle .fa-sun {
-            color: #fcd34d;
-            animation: sunAppear 0.5s ease-out forwards;
+        .back-link:active {
+            transform: scale(0.9);
         }
 
-        /* Ikon matahari saat di-hover */
-        body.dark-mode .dark-mode-toggle .fa-sun:hover {
-            color: #FFD700;
-            animation: spinOnce 1.5s ease-out; /* Durasi animasi diubah menjadi 1.5s */
-        }
-        
-        /* Ikon bulan */
-        .dark-mode-toggle .fa-moon {
-            color: #cbd5e1;
-        }
-        
-        .dark-mode-toggle .fa-moon:hover {
-            color: #94a3b8;
-        }
-        
-        /* Keyframes untuk animasi matahari saat muncul */
-        @keyframes sunAppear {
-            from {
-                transform: scale(0.5) rotate(0deg);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1) rotate(360deg);
-                opacity: 1;
-            }
-        }
-        
-        /* Keyframes untuk animasi berputar sekali saat di-hover */
-        @keyframes spinOnce {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        body.dark-mode .back-link, body.dark-mode .dark-mode-toggle {
+        body.dark-mode .back-link {
             color: #9ca3af;
         }
 
-        body.dark-mode .back-link:hover, body.dark-mode .dark-mode-toggle:hover {
+        body.dark-mode .back-link:hover {
             color: #d1d5db;
         }
 
@@ -127,7 +198,7 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             transition: all 0.5s ease;
         }
-
+        
         body.dark-mode .card {
             background: rgba(46, 55, 71, 0.8);
             border-color: rgba(69, 78, 93, 0.5);
@@ -189,6 +260,7 @@
             }
         }
 
+        /* Loading animation untuk kalkulasi harga (tetap) */
         .loading-animation {
             border: 4px solid #f3f3f3;
             border-top: 4px solid #3498db;
@@ -207,271 +279,7 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
-        /* Styles for AI Chat Assistant */
-        #ai-assistant-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: #1f2937;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease, background 0.3s ease;
-            z-index: 1000;
-        }
-
-        #ai-assistant-button:hover {
-            transform: scale(1.1);
-            background: #374151;
-        }
-
-        #ai-chat-box {
-            position: fixed;
-            bottom: 90px;
-            right: 20px;
-            width: 350px;
-            height: 450px;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-            z-index: 999;
-            transform: scale(0.9);
-            opacity: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-
-        body.dark-mode #ai-chat-box {
-            background: #2d3748;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-        }
-
-        #ai-chat-box.open {
-            display: flex;
-            transform: scale(1);
-            opacity: 1;
-        }
-
-        .chat-header {
-            background: #1f2937;
-            color: white;
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
-        }
-
-        .chat-messages {
-            flex-grow: 1;
-            padding: 1rem;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .chat-input {
-            padding: 1rem;
-            border-top: 1px solid #e2e8f0;
-            display: flex;
-            align-items: center;
-            background: #f8fafc;
-        }
-
-        body.dark-mode .chat-input {
-            background: #2d3748;
-            border-color: #4a5568;
-        }
-
-        body.dark-mode .chat-input input {
-            background-color: #1a202c;
-            color: #e2e8f0;
-            border-color: #4a5568;
-        }
-
-        .message-container {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            max-width: 80%;
-        }
         
-        .message-content {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            max-width: 100%;
-        }
-
-        .user-container {
-            align-self: flex-end;
-            flex-direction: row-reverse;
-        }
-
-        .ai-container {
-            align-self: flex-start;
-        }
-
-        .profile-img.white {
-            filter: brightness(0) invert(1);
-        }
-
-        .profile-pic {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-size: cover;
-            background-position: center;
-            flex-shrink: 0;
-            border: 2px solid white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        body.dark-mode .profile-pic {
-            border-color: #4b5563;
-        }
-
-        .user-pic {
-            background-image: url('https://placehold.co/40x40/4b5563/FFFFFF?text=YOU');
-        }
-
-        .ai-pic {
-            background-image: url('https://placehold.co/40x40/94a3b8/FFFFFF?text=AI');
-        }
-
-        .user-message {
-            background: #d1d5db;
-            color: #1f2937;
-            border-radius: 12px 12px 0 12px;
-            padding: 10px 14px;
-            word-wrap: break-word;
-        }
-
-        body.dark-mode .user-message {
-            background: #4a5568;
-            color: #e2e8f0;
-        }
-
-        .ai-message {
-            background: #f3f4f6;
-            color: #4b5563;
-            border-radius: 12px 12px 12px 0;
-            padding: 10px 14px;
-            word-wrap: break-word;
-        }
-
-        body.dark-mode .ai-message {
-            background: #1a202c;
-            color: #d1d5db;
-        }
-        
-        .typing-indicator {
-            display: inline-block;
-            background: #f1f5f9;
-            border-radius: 12px 12px 12px 0;
-            padding: 10px 14px;
-            word-wrap: break-word;
-        }
-
-        .typing-indicator span {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: #94a3b8;
-            border-radius: 50%;
-            margin: 0 2px;
-            animation: bounce 1s infinite;
-        }
-
-        body.dark-mode .typing-indicator {
-            background: #2d3748;
-        }
-        
-        body.dark-mode .typing-indicator span {
-            background: #a0aec0;
-        }
-
-        .typing-indicator span:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .typing-indicator span:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes bounce {
-            0%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-5px);
-            }
-        }
-        
-        .chat-action-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #25D366;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 9999px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            text-decoration: none;
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-
-        .chat-action-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        
-        .header-whatsapp-button {
-            background-color: #25D366;
-            color: white;
-            border-radius: 50%;
-            width: 28px;
-            height: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            transition: transform 0.2s ease, background-color 0.2s ease;
-        }
-
-        .header-whatsapp-button:hover {
-            background-color: #1EAE54;
-            transform: scale(1.1);
-        }
-        
-        .chat-status-divider {
-            text-align: center;
-            font-size: 0.65rem;
-            color: #9ca3af;
-            font-style: italic;
-            margin-top: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        body.dark-mode .chat-status-divider {
-            color: #6b7280;
-        }
-
         body.dark-mode .text-gray-800 {
             color: #e5e7eb;
         }
@@ -505,197 +313,409 @@
             background-color: #4a5568;
             color: #e5e7eb;
         }
+
+        /* Dari Uiverse.io oleh JkHuger - Disesuaikan */ 
+        /* Default */
+        .theme {
+            display: flex;
+            align-items: center;
+            -webkit-tap-highlight-color: transparent;
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            z-index: 50;
+        }
+
+        .theme__fill,
+        .theme__icon {
+            transition: 0.3s;
+        }
+
+        .theme__fill {
+            background-color: var(--bg);
+            display: block;
+            mix-blend-mode: difference;
+            position: fixed;
+            inset: 0;
+            height: 100%;
+            transform: translateX(-100%);
+        }
+
+        .theme__icon,
+        .theme__toggle {
+            z-index: 1;
+        }
+
+        .theme__icon,
+        .theme__icon-part {
+            position: absolute;
+        }
+
+        .theme__icon {
+            display: block;
+            top: 50%;
+            left: 0.25em;
+            width: 1.5em; /* Ukuran ikon cocok dengan lingkaran */
+            height: 1.5em; /* Ukuran ikon cocok dengan lingkaran */
+            transform: translateY(-50%);
+        }
+
+        .theme__icon-part {
+            border-radius: 50%;
+            box-shadow: 0.4em -0.4em 0 0.5em hsl(0,0%,100%) inset;
+            top: calc(50% - 0.5em);
+            left: calc(50% - 0.5em);
+            width: 1em;
+            height: 1em;
+            transition: box-shadow var(--transDur) ease-in-out,
+                    opacity var(--transDur) ease-in-out,
+                    transform var(--transDur) ease-in-out;
+            transform: scale(0.5);
+        }
+
+        .theme__icon-part ~ .theme__icon-part {
+            background-color: hsl(0,0%,100%);
+            border-radius: 0.05em;
+            top: 50%;
+            left: calc(50% - 0.05em);
+            transform: rotate(0deg) translateY(0.5em);
+            transform-origin: 50% 0;
+            width: 0.1em;
+            height: 0.2em;
+        }
+
+        .theme__icon-part:nth-child(3) {
+            transform: rotate(45deg) translateY(0.45em);
+        }
+
+        .theme__icon-part:nth-child(4) {
+            transform: rotate(90deg) translateY(0.45em);
+        }
+
+        .theme__icon-part:nth-child(5) {
+            transform: rotate(135deg) translateY(0.45em);
+        }
+
+        .theme__icon-part:nth-child(6) {
+            transform: rotate(180deg) translateY(0.45em);
+        }
+
+        .theme__icon-part:nth-child(7) {
+            transform: rotate(225deg) translateY(0.45em);
+        }
+
+        .theme__icon-part:nth-child(8) {
+            transform: rotate(270deg) translateY(0.5em);
+        }
+
+        .theme__icon-part:nth-child(9) {
+            transform: rotate(315deg) translateY(0.5em);
+        }
+
+        .theme__label,
+        .theme__toggle,
+        .theme__toggle-wrap {
+            position: relative;
+        }
+
+        .theme__toggle,
+        .theme__toggle:before {
+            display: block;
+        }
+
+        .theme__toggle {
+            background-color: hsl(48,90%,85%);
+            border-radius: 25% / 50%;
+            box-shadow: 0 0 0 0.125em var(--primaryT);
+            padding: 0.25em;
+            width: 4em;
+            height: 2em;
+            -webkit-appearance: none;
+            appearance: none;
+            transition: background-color var(--transDur) ease-in-out,
+                    box-shadow 0.15s ease-in-out,
+                    transform var(--transDur) ease-in-out;
+        }
+
+        .theme__toggle:before {
+            background-color: hsl(48,90%,55%);
+            border-radius: 50%;
+            content: "";
+            width: 1.5em;
+            height: 1.5em;
+            transition: 0.3s;
+        }
+
+        .theme__toggle:focus {
+            box-shadow: 0 0 0 0.125em var(--primary);
+            outline: transparent;
+        }
+
+        /* Checked */
+        .theme__toggle:checked {
+            background-color: hsl(198,90%,15%);
+        }
+
+        .theme__toggle:checked:before {
+            transform: translateX(2em);
+        }
+
+        .theme__toggle:checked ~ .theme__icon {
+            transform: translateX(2em) translateY(-50%); 
+        }
+
+        .theme__toggle:checked:before {
+            background-color: hsl(198,90%,55%);
+        }
+
+        .theme__toggle:checked ~ .theme__fill {
+            transform: translateX(0);
+        }
+
+        .theme__toggle:checked ~ .theme__icon .theme__icon-part:nth-child(1) {
+            box-shadow: 0.2em -0.2em 0 0.2em hsl(0,0%,100%) inset;
+            transform: scale(1);
+            top: 0.2em;
+            left: -0.2em;
+        }
+
+        .theme__toggle:checked ~ .theme__icon .theme__icon-part ~ .theme__icon-part {
+            opacity: 0;
+        }
+
+        .theme__toggle:checked ~ .theme__icon .theme__icon-part:nth-child(2) {
+            transform: rotate(45deg) translateY(0.8em);
+        }
+
+        .theme__toggle:checked ~ .theme__icon .theme__icon-part:nth-child(3) {
+            transform: rotate(90deg) translateY(0.8em);
+        }
+
+        .theme__toggle:checked ~ .theme__icon .theme__icon-part:nth-child(4) {
+            transform: rotate(135deg) translateY(0.8em);
+        }
+
+        .theme__toggle:checked ~ .theme__icon .theme__icon-part:nth-child(5) {
+            transform: rotate(180deg) translateY(0.8em);
+        }
+
+        .theme__toggle:checked ~ .theme__icon .theme__icon-part:nth-child(6) {
+            transform: rotate(225deg) translateY(0.8em);
+        }
+
+        .theme__toggle:checked ~ .theme__icon .theme__icon-part:nth-child(7) {
+            transform: rotate(270deg) translateY(0.8em);
+        }
+
+        .theme__toggle:checked ~ .theme__icon .theme__icon-part:nth-child(8) {
+            transform: rotate(315deg) translateY(0.8em);
+        }
+
+        .theme__toggle:checked ~ .theme__icon .theme__icon-part:nth-child(9) {
+            transform: rotate(360deg) translateY(0.8em);
+        }
+
+        .theme__toggle-wrap {
+            margin: 0 0.75em;
+        }
+
+        @supports selector(:focus-visible) {
+            .theme__toggle:focus {
+                box-shadow: 0 0 0 0.125em var(--primaryT);
+            }
+
+            .theme__toggle:focus-visible {
+                box-shadow: 0 0 0 0.125em var(--primary);
+            }
+        }
     </style>
 </head>
 <body class="p-4 flex flex-col items-center justify-start">
-    <div class="container-wrapper">
-        <!-- Tombol Kembali -->
-        <a href="https://linktr.ee/rafpictures" class="back-link" style="font-size: 1.5rem;">
-            <i class="fas fa-arrow-left"></i>
-        </a>
-        
-        <!-- Tombol Dark Mode -->
-        <div class="dark-mode-toggle" onclick="toggleDarkMode()">
-            <i id="darkModeIcon" class="fas fa-moon"></i>
-        </div>
-        
-        <!-- Profile Section -->
-        <div class="flex flex-col items-center mb-4">
-            <img id="profileImage" src="https://raw.githubusercontent.com/alfajririzqi/renderfarm/main/img/logo_black.png" 
-                 alt="Render Farm" 
-                 class="profile-img w-20 h-20 rounded-full object-cover mb-4">
-            <h1 class="text-3xl font-bold text-gray-800 mb-1">Render Farm Services</h1>
-            <p class="text-gray-600">Kalkulator Estimasi Biaya</p>
-        </div>
-        
-        <!-- Keterangan Ketentuan Render -->
-        <div class="card text-left mb-8">
-            <h2 class="text-lg font-semibold text-gray-800 mb-2">Catatan Penting:</h2>
-            <ul class="text-sm text-gray-600 font-light list-none p-0 m-0 space-y-1">
-                <li><i class="fas fa-file-invoice text-gray-500 mr-2"></i>Ukuran file yang direkomendasikan adalah di bawah 2GB untuk waktu render yang optimal.</li>
-                <li><i class="fas fa-file-image text-gray-500 mr-2"></i>File di atas 2GB masih bisa diterima, tetapi mungkin membutuhkan waktu rendering sedikit lebih lama.</li>
-                <li><i class="fas fa-file-image text-gray-500 mr-2"></i>Format render yang tersedia: MP4, PNG, EXR.</li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <div class="space-y-6">
-                <!-- Render Engine -->
-                <div class="p-4 rounded-lg bg-white shadow-lg">
-                    <label for="renderEngine" class="block text-sm font-medium text-gray-700 mb-2">
-                        <i class="fas fa-cogs text-gray-500 mr-1"></i> Render Engine
-                    </label>
-                    <select id="renderEngine" name="renderEngine"
-                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 focus:border-gray-500 focus:ring focus:ring-gray-300 focus:ring-opacity-50">
-                        <option value="cycles">Cycles</option>
-                        <option value="eevee">Eevee</option>
-                    </select>
-                </div>
-
-                <!-- Blender Version -->
-                <div class="p-4 rounded-lg bg-white shadow-lg">
-                    <label for="blenderVersion" class="block text-sm font-medium text-gray-700 mb-2">
-                        <i class="fas fa-cube text-gray-500 mr-1"></i> Blender Version
-                    </label>
-                    <select id="blenderVersion" name="blenderVersion"
-                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 focus:border-gray-500 focus:ring focus:ring-gray-300 focus:ring-opacity-50">
-                        <option value="4.5">4.5</option>
-                        <option value="4.4">4.4</option>
-                        <option value="4.3">4.3</option>
-                        <option value="4.2">4.2</option>
-                        <option value="4.1">4.1</option>
-                        <option value="4.0">4.0</option>
-                        <option value="3.5">3.5</option>
-                        <option value="3.4">3.4</option>
-                        <option value="3.2">3.2</option>
-                        <option value="3.1">3.1</option>
-                        <option value="3.0">3.0</option>
-                        <option value="2.90">2.90</option>
-                        <option value="2.80">2.80</option>
-                    </select>
-                </div>
-
-                <!-- Resolusi -->
-                <div class="p-4 rounded-lg bg-white shadow-lg">
-                    <label for="resolution" class="block text-sm font-medium text-gray-700 mb-2">
-                        <i class="fas fa-image text-gray-500 mr-1"></i> Resolusi
-                    </label>
-                    <select id="resolution" name="resolution"
-                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 focus:border-gray-500 focus:ring focus:ring-gray-300 focus:ring-opacity-50">
-                        <option value="hd">HD (1280x720)</option>
-                        <option value="fullhd">Full HD (1920x1080)</option>
-                        <option value="2k">2K (2048x1080)</option>
-                        <option value="4k">4K (3840x2160)</option>
-                    </select>
-                </div>
-
-                <!-- Jumlah Frame -->
-                <div class="p-4 rounded-lg bg-white shadow-lg">
-                    <label for="frameCount" class="block text-sm font-medium text-gray-700 mb-2">
-                        <i class="fas fa-film text-gray-500 mr-1"></i> Jumlah Frame
-                    </label>
-                    <input type="number" id="frameCount" name="frameCount" min="1"
-                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 focus:border-gray-500 focus:ring focus:ring-gray-300 focus:ring-opacity-50"
-                           placeholder="Contoh: 250">
-                    <p id="frameCountError" class="text-xs text-red-500 mt-2 hidden">Jumlah frame harus diisi.</p>
-                </div>
-
-                <!-- Tombol Hitung -->
-                <div class="flex justify-center mt-6">
-                    <button onclick="calculatePrice()"
-                            class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-md transform hover:scale-105 active:scale-95">
-                        Hitung Biaya
-                    </button>
-                </div>
-            </div>
-
-            <!-- Bagian Hasil -->
-            <div id="result" class="mt-6 hidden">
-                <div class="result-card rounded-xl p-5 text-center shadow-lg">
-                    <h3 class="font-bold text-xl mb-2">Total Estimasi Biaya</h3>
-                    <p id="totalPrice" class="text-3xl font-bold"></p>
-                    <p id="totalTime" class="text-sm mt-1"></p>
-                </div>
-                <!-- Tombol Konsultasi & Order -->
-                <div class="flex flex-col md:flex-row gap-4 mt-6">
-                    <button onclick="toggleChat()" class="w-full md:flex-1 bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-md transform hover:scale-105 active:scale-95">
-                        <i class="fas fa-comment-dots mr-2"></i> Konsultasi Online
-                    </button>
-                    <a href="https://wa.me/6289513170863" target="_blank" class="w-full md:flex-1 bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-md text-center flex items-center justify-center transform hover:scale-105 active:scale-95">
-                        <i class="fab fa-whatsapp text-lg mr-2"></i> Order Now
-                    </a>
-                </div>
-            </div>
-
-            <!-- Loading -->
-            <div id="loading" class="mt-6 hidden flex justify-center">
-                <div class="loading-animation"></div>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader-container">
+            <div class="loader">
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
             </div>
         </div>
     </div>
 
-    <!-- Floating AI Assistant Button -->
-    <div id="ai-assistant-button" class="fixed bottom-5 right-5 z-50 rounded-full bg-gray-800 text-white p-4 cursor-pointer shadow-lg hover:scale-110 transition-transform duration-300" onclick="toggleChat()">
-        <i class="fas fa-comments text-2xl"></i>
-    </div>
-
-    <!-- AI Chat Box -->
-    <div id="ai-chat-box" class="fixed bottom-24 right-5 w-80 h-96 bg-white rounded-lg shadow-2xl flex-col hidden z-50">
-        <div class="chat-header flex justify-between items-center bg-gray-800 text-white p-4 rounded-t-lg">
-            <span>AI Assisten</span>
-            <div class="flex items-center gap-2">
-                <a href="https://wa.me/6289513170863" target="_blank" class="header-whatsapp-button">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-                <button onclick="toggleChat()" class="text-white text-lg leading-none">&times;</button>
+    <div id="main-content" class="hidden w-full flex-grow flex flex-col justify-between items-center">
+        <div class="container-wrapper">
+            <!-- Tombol Kembali -->
+            <a href="https://linktr.ee/rafpictures" class="back-link" style="font-size: 1.5rem;">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            
+            <!-- Tombol Dark Mode -->
+            <label for="theme" class="theme">
+                <span class="theme__toggle-wrap">
+                    <input id="theme" class="theme__toggle" type="checkbox" role="switch" name="theme" value="dark" onchange="toggleDarkMode(this.checked)">
+                    <span class="theme__fill"></span>
+                    <span class="theme__icon">
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                    </span>
+                </span>
+            </label>
+            
+            <!-- Profile Section -->
+            <div class="flex flex-col items-center mb-4 text-center">
+                <img id="profileImage" src="https://raw.githubusercontent.com/alfajririzqi/renderfarm/main/img/logo_black.png" 
+                     alt="Render Farm" 
+                     class="profile-img w-20 h-20 rounded-full object-cover mb-4">
+                <h1 class="text-3xl font-bold text-gray-800 mb-1">Render Farm Services</h1>
+                <p class="text-gray-600">Kalkulator Estimasi Biaya</p>
             </div>
-        </div>
-        <div id="chat-messages" class="chat-messages flex-1 overflow-y-auto p-4 flex flex-col space-y-2">
-            <!-- Chat status divider -->
-            <div class="chat-status-divider">Anda sedang chat online dengan AI Assisten</div>
-            <!-- Initial AI message -->
-            <div class="ai-container">
-                <div class="profile-pic ai-pic"></div>
-                <div class="message-content">
-                    <div class="ai-message">Halo, bro dan sis! Apa kabar? Ada yang bisa aku bantu seputar rendering atau proyek 3D keren kamu? 🎨</div>
+            
+            <!-- Keterangan Ketentuan Render -->
+            <div class="card text-left mb-8">
+                <h2 class="text-lg font-semibold text-gray-800 mb-2">Catatan Penting:</h2>
+                <ul class="text-sm text-gray-600 font-light list-none p-0 m-0 space-y-1">
+                    <li><i class="fas fa-file-invoice text-gray-500 mr-2"></i>Ukuran file yang direkomendasikan adalah di bawah 2GB untuk waktu render yang optimal.</li>
+                    <li><i class="fas fa-file-image text-gray-500 mr-2"></i>File di atas 2GB masih bisa diterima, tetapi mungkin membutuhkan waktu rendering sedikit lebih lama.</li>
+                    <li><i class="fas fa-file-image text-gray-500 mr-2"></i>Format render yang tersedia: MP4, PNG, EXR.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="space-y-6">
+                    <!-- Render Engine -->
+                    <div class="p-4 rounded-lg bg-white shadow-lg">
+                        <label for="renderEngine" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-cogs text-gray-500 mr-1"></i> Render Engine
+                        </label>
+                        <select id="renderEngine" name="renderEngine"
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 focus:border-gray-500 focus:ring focus:ring-gray-300 focus:ring-opacity-50 transition-all duration-300 active:scale-95">
+                            <option value="Cycles">Cycles</option>
+                            <option value="Eevee">Eevee</option>
+                        </select>
+                    </div>
+
+                    <!-- Blender Version -->
+                    <div class="p-4 rounded-lg bg-white shadow-lg">
+                        <label for="blenderVersion" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-cube text-gray-500 mr-1"></i> Blender Version
+                        </label>
+                        <select id="blenderVersion" name="blenderVersion"
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 focus:border-gray-500 focus:ring focus:ring-gray-300 focus:ring-opacity-50 transition-all duration-300 active:scale-95">
+                            <option value="4.5">4.5</option>
+                            <option value="4.4">4.4</option>
+                            <option value="4.3">4.3</option>
+                            <option value="4.2">4.2</option>
+                            <option value="4.1">4.1</option>
+                            <option value="4.0">4.0</option>
+                            <option value="3.5">3.5</option>
+                            <option value="3.4">3.4</option>
+                            <option value="3.2">3.2</option>
+                            <option value="3.1">3.1</option>
+                            <option value="3.0">3.0</option>
+                            <option value="2.90">2.90</option>
+                            <option value="2.80">2.80</option>
+                        </select>
+                    </div>
+
+                    <!-- Resolusi -->
+                    <div class="p-4 rounded-lg bg-white shadow-lg">
+                        <label for="resolution" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-image text-gray-500 mr-1"></i> Resolusi
+                        </label>
+                        <select id="resolution" name="resolution"
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 focus:border-gray-500 focus:ring focus:ring-gray-300 focus:ring-opacity-50 transition-all duration-300 active:scale-95">
+                            <option value="HD (1280x720)">HD (1280x720)</option>
+                            <option value="Full HD (1920x1080)">Full HD (1920x1080)</option>
+                            <option value="2K (2048x1080)">2K (2048x1080)</option>
+                            <option value="4K (3840x2160)">4K (3840x2160)</option>
+                        </select>
+                    </div>
+
+                    <!-- Jumlah Frame -->
+                    <div class="p-4 rounded-lg bg-white shadow-lg">
+                        <label for="frameCount" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-film text-gray-500 mr-1"></i> Jumlah Frame
+                        </label>
+                        <input type="number" id="frameCount" name="frameCount" min="1"
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 focus:border-gray-500 focus:ring focus:ring-gray-300 focus:ring-opacity-50"
+                               placeholder="Contoh: 250">
+                        <p id="frameCountError" class="text-xs text-red-500 mt-2 hidden">Jumlah frame harus diisi.</p>
+                    </div>
+
+                    <!-- Tombol Hitung -->
+                    <div class="flex justify-center mt-6">
+                        <button onclick="calculatePrice()"
+                                class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-md transform hover:scale-105 active:scale-95">
+                            Hitung Biaya
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bagian Hasil -->
+                <div id="result" class="mt-6 hidden">
+                    <div class="result-card rounded-xl p-5 text-center shadow-lg">
+                        <h3 class="font-bold text-xl mb-2">Total Estimasi Biaya</h3>
+                        <p id="totalPrice" class="text-3xl font-bold"></p>
+                        <p id="totalTime" class="text-sm mt-1"></p>
+                    </div>
+                    <!-- Tombol Order -->
+                    <div class="flex flex-col md:flex-row gap-4 mt-6">
+                        <button onclick="orderViaWhatsapp()" class="w-full md:flex-1 bg-[#25D366] hover:bg-[#1EAE54] text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-md text-center flex items-center justify-center transform hover:scale-105 active:scale-95">
+                            <i class="fab fa-whatsapp text-lg mr-2"></i> Order Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Loading -->
+                <div id="loading" class="mt-6 hidden flex justify-center">
+                    <div class="loading-animation"></div>
                 </div>
             </div>
         </div>
-        <div class="chat-input p-4 flex items-center border-t border-gray-200">
-            <input type="text" id="chat-input" placeholder="Ketik pesan..." class="flex-1 rounded-full px-4 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
-            <button onclick="sendMessage()" class="ml-2 rounded-full p-2 bg-gray-800 text-white hover:bg-gray-900 focus:outline-none">
-                <i class="fas fa-arrow-right"></i>
-            </button>
-        </div>
-    </div>
 
-    <!-- Footer -->
-    <footer class="mt-8 text-center text-gray-500 text-sm">
-        <p>&copy; 2025 RAF Pictures. All rights reserved.</p>
-        <p>Dibuat dengan ❤️ untuk kebutuhan render Anda.</p>
-    </footer>
+        <!-- Footer -->
+        <footer class="mt-8 text-center text-gray-500 text-sm">
+            <p>&copy; 2025 RAF Pictures. All rights reserved.</p>
+            <p>Dibuat dengan ❤️ untuk kebutuhan render Anda.</p>
+        </footer>
+    </div>
 
     <script>
         // Data harga per frame berdasarkan aturan baru
         const framePrices = {
-            'cycles': {
-                'hd': 380,
-                'fullhd': 380,
-                '2k': 380,
-                '4k': 380
+            'Cycles': {
+                'HD (1280x720)': 380,
+                'Full HD (1920x1080)': 380,
+                '2K (2048x1080)': 380,
+                '4K (3840x2160)': 380
             },
-            'eevee': {
-                'hd': 300,
-                'fullhd': 300,
-                '2k': 300,
-                '4k': 300
+            'Eevee': {
+                'HD (1280x720)': 300,
+                'Full HD (1920x1080)': 300,
+                '2K (2048x1080)': 300,
+                '4K (3840x2160)': 300
             }
         };
 
-        const priceKnowledge = "Harga per frame: Cycles 380 Rupiah, Eevee 300 Rupiah.";
-        const infoKnowledge = "Ukuran file yang direkomendasikan adalah di bawah 2GB untuk waktu render yang optimal. File di atas 2GB masih bisa diterima, tetapi mungkin membutuhkan waktu rendering sedikit lebih lama. Format render yang tersedia: MP4, PNG, EXR.";
-        const timeKnowledge = "Waktu render umumnya 2-3 jam, tergantung kompleksitas scene. Jika scene sangat kompleks dan ukuran file di atas 2GB, waktu render bisa lebih lama.";
+        // Fungsi untuk mengelola preloader
+        function handlePreloader() {
+            const preloader = document.getElementById('preloader');
+            const mainContent = document.getElementById('main-content');
+            setTimeout(() => {
+                preloader.classList.add('hidden');
+                mainContent.classList.remove('hidden');
+            }, 1500); // Tampilkan halaman setelah 1.5 detik
+        }
 
+        window.onload = handlePreloader;
 
         function formatRupiah(number) {
             return new Intl.NumberFormat('id-ID', {
@@ -712,7 +732,7 @@
             const loadingDiv = document.getElementById('loading');
             
             // Validasi input
-            if (frameCountInput.value.trim() === '') {
+            if (frameCountInput.value.trim() === '' || isNaN(parseInt(frameCountInput.value, 10))) {
                 frameCountError.classList.remove('hidden');
                 resultDiv.classList.add('hidden');
                 return;
@@ -747,202 +767,36 @@
             }, 1000); // Durasi loading 1 detik
         }
         
-        // --- AI Assistant Functions and State ---
-        const chatBox = document.getElementById('ai-chat-box');
-        const chatInput = document.getElementById('chat-input');
-        const chatMessages = document.getElementById('chat-messages');
-        let offTopicCounter = 0;
-        const offTopicLimit = 3;
-        let hasOfferedService = false;
+        function orderViaWhatsapp() {
+            const renderEngine = document.getElementById('renderEngine').value;
+            const blenderVersion = document.getElementById('blenderVersion').value;
+            const resolution = document.getElementById('resolution').value;
+            const frameCount = document.getElementById('frameCount').value;
+            
+            const message = encodeURIComponent(
+                `Halo, saya ingin order render proyek 3D:\n\n` +
+                `*Render Engine:* ${renderEngine}\n` +
+                `*Blender Version:* ${blenderVersion}\n` +
+                `*Resolusi:* ${resolution}\n` +
+                `*Jumlah Frame:* ${frameCount}`
+            );
 
-        function toggleChat() {
-            chatBox.classList.toggle('open');
+            const whatsappUrl = `https://wa.me/6289513170863?text=${message}`;
+            window.open(whatsappUrl, '_blank');
         }
 
-        chatInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
-
-        function is3DTopic(text) {
-            const keywords = ['render', 'blender', '3d', 'cycles', 'eevee', 'modeling', 'animasi', 'texture', 'material', 'light', 'sculpting', 'renderfarm', 'harga', 'biaya', 'price', 'file', 'ukuran', 'format', 'mp4', 'png', 'exr', 'spesifikasi', 'lama', 'lambat', 'lemot', 'cepat', 'vga', 'gpu', 'spec', 'komputer', 'pc', 'waktu', 'jam', 'konsultasi', 'order'];
-            return keywords.some(keyword => text.toLowerCase().includes(keyword));
-        }
-
-        function isSellingTrigger(text) {
-            const keywords = ['vga', 'gpu', 'spek pc', 'komputer lemot', 'render lama', 'panas', 'spec rendah', 'butuh bantuan', 'bantu'];
-            return keywords.some(keyword => text.toLowerCase().includes(keyword));
-        }
-        
-        // New, more specific trigger phrase
-        const triggerPhrase = "Untuk detail lebih lanjut, bro/sis bisa langsung tanyakan ke bos saya ya.";
-
-        async function sendMessage() {
-            const userMessage = chatInput.value.trim();
-            if (userMessage === '') return;
-
-            // Display user message
-            const userMessageContainer = document.createElement('div');
-            userMessageContainer.classList.add('message-container', 'user-container');
-            
-            const userPic = document.createElement('div');
-            userPic.classList.add('profile-pic', 'user-pic');
-            userMessageContainer.appendChild(userPic);
-            
-            const userMsgDiv = document.createElement('div');
-            userMsgDiv.textContent = userMessage;
-            userMsgDiv.classList.add('user-message');
-            userMessageContainer.appendChild(userMsgDiv);
-            
-            chatMessages.appendChild(userMessageContainer);
-            chatInput.value = '';
-
-            // Scroll to bottom
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-
-            // Display typing indicator
-            const loadingContainer = document.createElement('div');
-            loadingContainer.classList.add('message-container', 'ai-container');
-            const aiPic = document.createElement('div');
-            aiPic.classList.add('profile-pic', 'ai-pic');
-            const typingDiv = document.createElement('div');
-            typingDiv.classList.add('typing-indicator');
-            typingDiv.innerHTML = '<span></span><span></span><span></span>';
-            loadingContainer.appendChild(aiPic);
-            loadingContainer.appendChild(typingDiv);
-            chatMessages.appendChild(loadingContainer);
-
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-
-            let prompt;
-            const basePrompt = `Bertindak sebagai seorang CS online yang ramah dan ahli 3D artist Gen Z, fokus pada topik Blender. Kamu punya wawasan luas tentang rendering, optimisasi proyek, dan tips 3D. Kamu tahu banget tentang harga layanan ini: ${priceKnowledge} Kamu paham batasan layanan ini: ${infoKnowledge} Dan kamu tahu tentang waktu render: ${timeKnowledge} Jawab dengan sangat singkat, padat, dan gunakan emoji yang sesuai seperti chat WhatsApp. Hindari penggunaan markdown seperti **bintang** atau _garis bawah_. Jika kamu ragu atau tidak yakin, akhiri jawabanmu dengan kalimat: '${triggerPhrase}'`;
-            
-            if (is3DTopic(userMessage)) {
-                offTopicCounter = 0;
-                prompt = `${basePrompt} Pertanyaan: "${userMessage}". Jawab dalam bahasa Indonesia.`;
-            } else {
-                offTopicCounter++;
-                if (offTopicCounter >= offTopicLimit) {
-                    prompt = `Bertindak sebagai ahli 3D artist Gen Z. Kamu sudah mengobrol tentang hal di luar 3D sebanyak ${offTopicCounter} kali. Sekarang, dengan sopan kembalikan percakapan ke topik utama, yaitu 3D rendering dan Blender. Katakan bahwa kamu siap membantu dengan pertanyaan seputar rendering, modeling, atau animasi. Jawab dengan sangat singkat, padat, dan gunakan emoji yang sesuai. Pertanyaan: "${userMessage}". Jawab dalam bahasa Indonesia.`;
-                    offTopicCounter = 0; 
-                } else {
-                    prompt = `Bertindak sebagai ahli 3D artist Gen Z yang ramah dan keren. Kamu bisa ngobrol tentang hal di luar topik. Jawab dengan sangat singkat, padat, dan gunakan emoji yang sesuai. Hindari penggunaan markdown seperti **bintang** atau _garis bawah_. Pertanyaan: "${userMessage}". Jawab dalam bahasa Indonesia.`;
-                }
-            }
-
-            try {
-                const payload = {
-                    contents: [{
-                        parts: [{
-                            text: prompt
-                        }]
-                    }],
-                    generationConfig: {
-                        responseMimeType: "text/plain",
-                    }
-                };
-
-                const apiKey = "";
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (!response.ok) {
-                    throw new Error(`API call failed with status: ${response.status}`);
-                }
-
-                const result = await response.json();
-                let assistantResponse = result.candidates?.[0]?.content?.parts?.[0]?.text;
-
-                if (assistantResponse) {
-                    assistantResponse = assistantResponse.replace(/\*\*(.*?)\*\*/g, '$1');
-                    assistantResponse = assistantResponse.replace(/\*(.*?)\*/g, '$1');
-                }
-
-                chatMessages.removeChild(loadingContainer);
-
-                if (assistantResponse) {
-                    const aiMessageContainer = document.createElement('div');
-                    aiMessageContainer.classList.add('message-container', 'ai-container');
-                    
-                    const aiPic = document.createElement('div');
-                    aiPic.classList.add('profile-pic', 'ai-pic');
-                    aiMessageContainer.appendChild(aiPic);
-
-                    const messageContent = document.createElement('div');
-                    messageContent.classList.add('message-content');
-
-                    const aiMsgDiv = document.createElement('div');
-                    aiMsgDiv.textContent = assistantResponse;
-                    aiMsgDiv.classList.add('ai-message');
-                    messageContent.appendChild(aiMsgDiv);
-
-                    // Check if the response contains the trigger phrase
-                    if (assistantResponse.includes(triggerPhrase)) {
-                        const whatsappButton = document.createElement('a');
-                        whatsappButton.href = 'https://wa.me/6289513170863';
-                        whatsappButton.target = '_blank';
-                        whatsappButton.classList.add('chat-action-button'); // Removed 'mt-2' here
-                        whatsappButton.innerHTML = `<i class="fab fa-whatsapp text-lg mr-2"></i>Hubungi Bos Saya`;
-                        messageContent.appendChild(whatsappButton);
-                    }
-
-                    aiMessageContainer.appendChild(messageContent);
-                    chatMessages.appendChild(aiMessageContainer);
-                } else {
-                    const errorContainer = document.createElement('div');
-                    errorContainer.classList.add('message-container', 'ai-container');
-                    const aiPic = document.createElement('div');
-                    aiPic.classList.add('profile-pic', 'ai-pic');
-                    const errorDiv = document.createElement('div');
-                    errorDiv.textContent = "Maaf, terjadi kesalahan. Silakan coba lagi. 😅";
-                    errorDiv.classList.add('ai-message');
-                    errorContainer.appendChild(aiPic);
-                    errorContainer.appendChild(errorDiv);
-                    chatMessages.appendChild(errorContainer);
-                }
-
-            } catch (error) {
-                console.error("Error calling Gemini API:", error);
-                chatMessages.removeChild(loadingContainer);
-
-                const errorContainer = document.createElement('div');
-                errorContainer.classList.add('message-container', 'ai-container');
-                const aiPic = document.createElement('div');
-                aiPic.classList.add('profile-pic', 'ai-pic');
-                const errorDiv = document.createElement('div');
-                errorDiv.textContent = "Maaf, terjadi kesalahan. Silakan coba lagi. 😅";
-                errorDiv.classList.add('ai-message');
-                errorContainer.appendChild(aiPic);
-                errorContainer.appendChild(errorDiv);
-                chatMessages.appendChild(errorContainer);
-            } finally {
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-        }
-
-        function toggleDarkMode() {
+        function toggleDarkMode(isChecked) {
             const body = document.body;
             const profileImage = document.getElementById('profileImage');
-            const darkModeIcon = document.getElementById('darkModeIcon');
-            const isDarkMode = body.classList.toggle('dark-mode');
-
-            if (isDarkMode) {
-                darkModeIcon.classList.remove('fa-moon');
-                darkModeIcon.classList.add('fa-sun');
+            
+            if (isChecked) {
+                body.classList.add('dark-mode');
                 profileImage.src = 'https://raw.githubusercontent.com/alfajririzqi/renderfarm/main/img/logo_white.png';
             } else {
-                darkModeIcon.classList.remove('fa-sun');
-                darkModeIcon.classList.add('fa-moon');
+                body.classList.remove('dark-mode');
                 profileImage.src = 'https://raw.githubusercontent.com/alfajririzqi/renderfarm/main/img/logo_black.png';
             }
         }
-
     </script>
 </body>
 </html>
