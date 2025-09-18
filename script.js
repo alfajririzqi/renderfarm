@@ -2,15 +2,15 @@
 const framePrices = {
     'Cycles': {
         'HD (1280x720)': 380,
-        'Full HD (1920x1080)': 480, // Naik Rp100
-        '2K (2048x1080)': 580, // Naik Rp100
-        '4K (3840x2160)': 680  // Naik Rp100
+        'Full HD (1920x1080)': 480, 
+        '2K (2048x1080)': 580, 
+        '4K (3840x2160)': 680  
     },
     'Eevee': {
         'HD (1280x720)': 300,
-        'Full HD (1920x1080)': 400, // Naik Rp100
-        '2K (2048x1080)': 500, // Naik Rp100
-        '4K (3840x2160)': 600  // Naik Rp100
+        'Full HD (1920x1080)': 400, 
+        '2K (2048x1080)': 500, 
+        '4K (3840x2160)': 600  
     }
 };
 // Fungsi untuk mengelola preloader
@@ -20,7 +20,7 @@ function handlePreloader() {
     setTimeout(() => {
         preloader.classList.add('hidden');
         mainContent.classList.remove('hidden');
-    }, 1500); // Tampilkan halaman setelah 1.5 detik
+    }, 1500); 
 }
 // Fungsi untuk mengaplikasikan mode gelap
 function applyDarkMode(isDark) {
@@ -49,7 +49,7 @@ window.addEventListener('DOMContentLoaded', () => {
     darkModeToggle.addEventListener('change', (event) => {
         applyDarkMode(event.target.checked);
     });
-    // Tambahkan event listener untuk slider
+    
     const frameCountSlider = document.getElementById('frameCount');
     const frameCountValue = document.getElementById('frameCountValue');
     frameCountSlider.addEventListener('input', (event) => {
@@ -102,4 +102,5 @@ function orderViaWhatsapp() {
     );
     const whatsappUrl = `https://wa.me/6289513170863?text=${message}`;
     window.open(whatsappUrl, '_blank');
+
 }
