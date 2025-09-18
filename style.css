@@ -13,7 +13,7 @@ body.dark-mode {
     background: linear-gradient(135deg, #1f2937 0%, #0c1521 100%);
     color: #e5e7eb;
 }
-/* Preloader CSS baru */
+/* Preloader CSS */
 #preloader {
     position: fixed;
     top: 0;
@@ -31,11 +31,11 @@ body.dark-mode {
     opacity: 0;
     pointer-events: none;
 }
-/* Dari Uiverse.io oleh dovatgabriel */
+
 .three-body {
     --uib-size: 35px;
     --uib-speed: 0.8s;
-    --uib-color: #3498db; /* Warna loader baru untuk tema terang */
+    --uib-color: #3498db; 
     position: relative;
     display: inline-block;
     height: var(--uib-size);
@@ -118,7 +118,7 @@ body.dark-mode {
     }
 }
 body.dark-mode .three-body {
-    --uib-color: #60a5fa; /* Warna loader baru untuk tema gelap */
+    --uib-color: #60a5fa; 
 }
 .container-wrapper {
     max-width: 620px;
@@ -221,7 +221,7 @@ body.dark-mode .shared-card-style {
         box-shadow: 0 0 30px rgba(149, 75, 214, 0.8);
     }
 }
-/* Loading animation untuk kalkulasi harga (tetap) */
+
 .loading-animation {
     border: 4px solid #f3f3f3;
     border-top: 4px solid #3498db;
@@ -270,7 +270,7 @@ body.dark-mode .rounded-md {
     right: 24px;
     z-index: 50;
 }
-/* CSS untuk Switcher Baru (dari user) yang diperkecil */
+
 .peer:checked + div {
     background-color: #383838;
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
@@ -282,4 +282,5 @@ body.dark-mode .rounded-md {
 .peer:checked + div .moon-icon {
     opacity: 1;
     transform: rotate(180deg) translateY(0);
+
 }
