@@ -6,341 +6,9 @@
     <title>Kalkulator Harga Render</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: #1f2937;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            transition: background-color 0.5s ease, color 0.5s ease;
-        }
-
-        body.dark-mode {
-            background: linear-gradient(135deg, #1f2937 0%, #0c1521 100%);
-            color: #e5e7eb;
-        }
-        
-        /* Preloader CSS baru */
-        #preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.5s ease-in-out;
-        }
-
-        #preloader.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        /* Dari Uiverse.io oleh dovatgabriel */
-        .three-body {
-            --uib-size: 35px;
-            --uib-speed: 0.8s;
-            --uib-color: #3498db; /* Warna loader baru untuk tema terang */
-            position: relative;
-            display: inline-block;
-            height: var(--uib-size);
-            width: var(--uib-size);
-            animation: spin78236 calc(var(--uib-speed) * 2.5) infinite linear;
-        }
-
-        .three-body__dot {
-            position: absolute;
-            height: 100%;
-            width: 30%;
-        }
-
-        .three-body__dot:after {
-            content: '';
-            position: absolute;
-            height: 0%;
-            width: 100%;
-            padding-bottom: 100%;
-            background-color: var(--uib-color);
-            border-radius: 50%;
-        }
-
-        .three-body__dot:nth-child(1) {
-            bottom: 5%;
-            left: 0;
-            transform: rotate(60deg);
-            transform-origin: 50% 85%;
-        }
-
-        .three-body__dot:nth-child(1)::after {
-            bottom: 0;
-            left: 0;
-            animation: wobble1 var(--uib-speed) infinite ease-in-out;
-            animation-delay: calc(var(--uib-speed) * -0.3);
-        }
-
-        .three-body__dot:nth-child(2) {
-            bottom: 5%;
-            right: 0;
-            transform: rotate(-60deg);
-            transform-origin: 50% 85%;
-        }
-
-        .three-body__dot:nth-child(2)::after {
-            bottom: 0;
-            left: 0;
-            animation: wobble1 var(--uib-speed) infinite calc(var(--uib-speed) * -0.15) ease-in-out;
-        }
-
-        .three-body__dot:nth-child(3) {
-            bottom: -5%;
-            left: 0;
-            transform: translateX(116.666%);
-        }
-
-        .three-body__dot:nth-child(3)::after {
-            top: 0;
-            left: 0;
-            animation: wobble2 var(--uib-speed) infinite ease-in-out;
-        }
-
-        @keyframes spin78236 {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes wobble1 {
-            0%, 100% {
-                transform: translateY(0%) scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: translateY(-66%) scale(0.65);
-                opacity: 0.8;
-            }
-        }
-
-        @keyframes wobble2 {
-            0%, 100% {
-                transform: translateY(0%) scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: translateY(66%) scale(0.65);
-                opacity: 0.8;
-            }
-        }
-        
-        body.dark-mode .three-body {
-            --uib-color: #60a5fa; /* Warna loader baru untuk tema gelap */
-        }
-        
-        .container-wrapper {
-            max-width: 620px;
-            width: 100%;
-            margin: 0 auto;
-            position: relative;
-            padding: 24px;
-        }
-
-        .back-link {
-            position: absolute;
-            top: 24px;
-            left: 24px;
-            z-index: 50;
-            color: #6b7280;
-            transition: all 0.3s ease;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .back-link:hover {
-            color: #4b5563;
-            transform: scale(1.1);
-        }
-
-        .back-link:active {
-            transform: scale(0.9);
-        }
-
-        body.dark-mode .back-link {
-            color: #9ca3af;
-        }
-
-        body.dark-mode .back-link:hover {
-            color: #d1d5db;
-        }
-
-        .profile-img {
-            transition: transform 0.3s ease-in-out, filter 0.5s ease;
-        }
-
-        .profile-img:hover {
-            transform: scale(1.1);
-        }
-
-        .profile-img.white {
-            filter: brightness(0) invert(1);
-        }
-        
-        .shared-card-style {
-            padding: 24px;
-            border: 1px solid rgba(229, 231, 235, 0.5);
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            transition: all 0.5s ease;
-        }
-
-        body.dark-mode .shared-card-style {
-            background: rgba(46, 55, 71, 0.8);
-            border-color: rgba(69, 78, 93, 0.5);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
-            color: #e5e7eb;
-        }
-        
-        .result-card {
-            background: linear-gradient(135deg, #4f5bd5 0%, #962fbf 30%, #d62976 60%, #fa7e1e 90%);
-            color: white;
-            position: relative;
-            overflow: hidden;
-            border: 2px solid white;
-            animation: pulse-glow 2s infinite alternate;
-        }
-        
-        .result-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 70%);
-            transform: rotate(30deg);
-            animation: shine 3s infinite;
-        }
-
-        .result-card h3, .result-card p {
-            color: white !important;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .result-card h3 {
-            font-weight: 700;
-            font-size: 1.25rem;
-        }
-
-        .result-card p {
-            opacity: 0.9;
-            font-weight: 500;
-        }
-
-        @keyframes shine {
-            0% {
-                transform: rotate(30deg) translate(-30%, -30%);
-            }
-            100% {
-                transform: rotate(30deg) translate(30%, 30%);
-            }
-        }
-        
-        @keyframes pulse-glow {
-            0% {
-                box-shadow: 0 0 15px rgba(149, 75, 214, 0.5);
-            }
-            100% {
-                box-shadow: 0 0 30px rgba(149, 75, 214, 0.8);
-            }
-        }
-
-        /* Loading animation untuk kalkulasi harga (tetap) */
-        .loading-animation {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            animation: spin 1s linear infinite;
-        }
-
-        body.dark-mode .loading-animation {
-            border-color: #4b5563;
-            border-top-color: #60a5fa;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        body.dark-mode .text-gray-800 {
-            color: #e5e7eb;
-        }
-
-        body.dark-mode .text-gray-600 {
-            color: #9ca3af;
-        }
-
-        body.dark-mode .text-gray-700 {
-            color: #cbd5e1;
-        }
-
-        body.dark-mode .text-gray-500 {
-            color: #6b7280;
-        }
-
-        body.dark-mode .bg-white {
-            background-color: #2d3748;
-            color: #e5e7eb;
-        }
-
-        body.dark-mode .bg-white.shadow-lg {
-             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
-        }
-
-        body.dark-mode .border-gray-300 {
-            border-color: #4a5568;
-        }
-
-        body.dark-mode .rounded-md {
-            background-color: #4a5568;
-            color: #e5e7eb;
-        }
-        
-        .switcher-container {
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            z-index: 50;
-        }
-
-        /* CSS untuk Switcher Baru (dari user) yang diperkecil */
-        .peer:checked + div {
-            background-color: #383838;
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
-        }
-        .peer:checked + div .sun-icon {
-            opacity: 0;
-            transform: rotate(90deg) translateY(-100%);
-        }
-        .peer:checked + div .moon-icon {
-            opacity: 1;
-            transform: rotate(180deg) translateY(0);
-        }
     </style>
 </head>
 <body class="p-4 flex flex-col items-center justify-start">
@@ -352,14 +20,12 @@
             <div class="three-body__dot"></div>
         </div>
     </div>
-
     <div id="main-content" class="hidden w-full flex-grow flex flex-col justify-between items-center">
         <div class="container-wrapper">
             <!-- Tombol Kembali -->
             <a href="https://linktr.ee/rafpictures" class="back-link" style="font-size: 1.5rem;">
                 <i class="fas fa-arrow-left"></i>
             </a>
-            
             <!-- Switcher baru dari user yang diperkecil -->
             <div class="switcher-container">
                 <label class="relative inline-flex items-center cursor-pointer">
@@ -374,16 +40,14 @@
                 </label>
             </div>
             <!-- Akhir switcher baru -->
-            
             <!-- Profile Section -->
             <div class="flex flex-col items-center mb-4 text-center">
-                <img id="profileImage" src="https://raw.githubusercontent.com/alfajririzqi/renderfarm/main/img/logo_black.png" 
-                     alt="Render Farm" 
+                <img id="profileImage" src="https://raw.githubusercontent.com/alfajririzqi/renderfarm/main/img/logo_black.png"
+                     alt="Render Farm"
                      class="profile-img w-20 h-20 rounded-full object-cover mb-4">
                 <h1 class="text-3xl font-bold text-gray-800 mb-1">Render Farm Services</h1>
                 <p class="text-gray-600">Kalkulator Estimasi Biaya</p>
             </div>
-            
             <!-- Keterangan Ketentuan Render (Static Card) -->
             <div id="notes-card" class="shared-card-style mb-8">
                 <h2 class="text-lg font-semibold text-gray-800 mb-2">Catatan Penting:</h2>
@@ -393,7 +57,6 @@
                     <li><i class="fas fa-file-image text-gray-500 mr-2"></i>Format render yang tersedia: MP4, PNG, EXR.</li>
                 </ul>
             </div>
-
             <div class="card shared-card-style">
                 <div class="space-y-6">
                     <!-- Render Engine -->
@@ -407,7 +70,6 @@
                             <option value="Eevee">Eevee</option>
                         </select>
                     </div>
-
                     <!-- Blender Version -->
                     <div class="p-4 rounded-lg bg-white shadow-lg">
                         <label for="blenderVersion" class="block text-sm font-medium text-gray-700 mb-2">
@@ -430,7 +92,6 @@
                             <option value="2.80">2.80</option>
                         </select>
                     </div>
-
                     <!-- Resolusi -->
                     <div class="p-4 rounded-lg bg-white shadow-lg">
                         <label for="resolution" class="block text-sm font-medium text-gray-700 mb-2">
@@ -444,7 +105,6 @@
                             <option value="4K (3840x2160)">4K (3840x2160)</option>
                         </select>
                     </div>
-
                     <!-- Jumlah Frame (Slider) -->
                     <div class="p-4 rounded-lg bg-white shadow-lg">
                         <label for="frameCount" class="block text-sm font-medium text-gray-700 mb-2">
@@ -453,7 +113,6 @@
                         <input type="range" id="frameCount" name="frameCount" min="1" max="1000" value="1"
                                class="mt-1 block w-full h-2 rounded-lg bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 appearance-none">
                     </div>
-
                     <!-- Tombol Hitung -->
                     <div class="flex justify-center mt-6">
                         <button onclick="calculatePrice()"
@@ -462,7 +121,6 @@
                         </button>
                     </div>
                 </div>
-
                 <!-- Bagian Hasil -->
                 <div id="result" class="mt-6 hidden">
                     <div class="result-card rounded-xl p-5 text-center shadow-lg">
@@ -477,141 +135,18 @@
                         </button>
                     </div>
                 </div>
-
                 <!-- Loading -->
                 <div id="loading" class="mt-6 hidden flex justify-center">
                     <div class="loading-animation"></div>
                 </div>
             </div>
         </div>
-
         <!-- Footer -->
         <footer class="mt-8 text-center text-gray-500 text-sm">
             <p>&copy; 2025 RAF Pictures. All rights reserved.</p>
             <p>Dibuat dengan ❤️ untuk kebutuhan render Anda.</p>
         </footer>
     </div>
-
-    <script>
-        // Data harga per frame berdasarkan aturan baru
-        const framePrices = {
-            'Cycles': {
-                'HD (1280x720)': 380,
-                'Full HD (1920x1080)': 480, // Naik Rp100
-                '2K (2048x1080)': 580, // Naik Rp100
-                '4K (3840x2160)': 680  // Naik Rp100
-            },
-            'Eevee': {
-                'HD (1280x720)': 300,
-                'Full HD (1920x1080)': 400, // Naik Rp100
-                '2K (2048x1080)': 500, // Naik Rp100
-                '4K (3840x2160)': 600  // Naik Rp100
-            }
-        };
-
-        // Fungsi untuk mengelola preloader
-        function handlePreloader() {
-            const preloader = document.getElementById('preloader');
-            const mainContent = document.getElementById('main-content');
-            setTimeout(() => {
-                preloader.classList.add('hidden');
-                mainContent.classList.remove('hidden');
-            }, 1500); // Tampilkan halaman setelah 1.5 detik
-        }
-
-        // Fungsi untuk mengaplikasikan mode gelap
-        function applyDarkMode(isDark) {
-            const body = document.body;
-            const profileImage = document.getElementById('profileImage');
-            
-            if (isDark) {
-                body.classList.add('dark-mode');
-                profileImage.src = 'https://raw.githubusercontent.com/alfajririzqi/renderfarm/main/img/logo_white.png';
-                localStorage.setItem('theme', 'dark');
-            } else {
-                body.classList.remove('dark-mode');
-                profileImage.src = 'https://raw.githubusercontent.com/alfajririzqi/renderfarm/main/img/logo_black.png';
-                localStorage.setItem('theme', 'light');
-            }
-        }
-        
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('theme');
-            const darkModeToggle = document.getElementById('darkModeToggle');
-            
-            if (savedTheme === 'dark') {
-                applyDarkMode(true);
-                darkModeToggle.checked = true;
-            } else {
-                applyDarkMode(false);
-                darkModeToggle.checked = false;
-            }
-            
-            darkModeToggle.addEventListener('change', (event) => {
-                applyDarkMode(event.target.checked);
-            });
-
-            // Tambahkan event listener untuk slider
-            const frameCountSlider = document.getElementById('frameCount');
-            const frameCountValue = document.getElementById('frameCountValue');
-            frameCountSlider.addEventListener('input', (event) => {
-                frameCountValue.textContent = event.target.value;
-            });
-        });
-
-        window.onload = handlePreloader;
-
-        function formatRupiah(number) {
-            return new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 0
-            }).format(number);
-        }
-
-        function calculatePrice() {
-            const frameCountSlider = document.getElementById('frameCount');
-            const resultDiv = document.getElementById('result');
-            const loadingDiv = document.getElementById('loading');
-            
-            resultDiv.classList.add('hidden');
-            loadingDiv.classList.remove('hidden');
-
-            setTimeout(() => {
-                const frameCount = parseInt(frameCountSlider.value, 10);
-                const renderEngine = document.getElementById('renderEngine').value;
-                const resolution = document.getElementById('resolution').value;
-                const totalPriceP = document.getElementById('totalPrice');
-                const totalTimeP = document.getElementById('totalTime');
-
-                const pricePerFrame = framePrices[renderEngine][resolution];
-                const totalPrice = pricePerFrame * frameCount;
-
-                totalPriceP.textContent = formatRupiah(totalPrice);
-                totalTimeP.textContent = "Waktu rendering akan bervariasi.";
-
-                loadingDiv.classList.add('hidden');
-                resultDiv.classList.remove('hidden');
-            }, 1000); 
-        }
-        
-        function orderViaWhatsapp() {
-            const renderEngine = document.getElementById('renderEngine').value;
-            const blenderVersion = document.getElementById('blenderVersion').value;
-            const resolution = document.getElementById('resolution').value;
-            const frameCount = document.getElementById('frameCount').value;
-            
-            const message = encodeURIComponent(
-                `Halo, saya ingin order render proyek 3D:\n\n` +
-                `*Render Engine:* ${renderEngine}\n` +
-                `*Blender Version:* ${blenderVersion}\n` +
-                `*Resolusi:* ${resolution}\n` +
-                `*Jumlah Frame:* ${frameCount}`
-            );
-
-            const whatsappUrl = `https://wa.me/6289513170863?text=${message}`;
-            window.open(whatsappUrl, '_blank');
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
